@@ -1,6 +1,6 @@
 import requests
 import time
-import schedule
+# import schedule
 from telegram import Bot, Update
 from telegram.ext import CommandHandler, Updater, CallbackContext
 from datetime import datetime
@@ -49,7 +49,7 @@ def execute_trade(binance_price, wazirx_price):
     if binance_price is None or wazirx_price is None:
         return
 
-    price_difference = wazirx_price - binance_price  
+    price_difference = wazirx_price - binance_price
     if price_difference >= price_difference_threshold:
         print(f"Price difference is {price_difference}, executing trade...")
 
@@ -65,16 +65,17 @@ def execute_trade(binance_price, wazirx_price):
 def send_coin_values(bot):
     while True:
         binance_price, wazirx_price = fetch_prices()
-        current_time = datetime.now().strftime('%d-%B-%y %I:%M%p')  
-        price_difference = wazirx_price - binance_price  
+        current_time = datetime.now().strftime('%d-%B-%y %I:%M%p')
+
 
         if binance_price is not None and wazirx_price is not None:
+            price_difference = wazirx_price - binance_price
             message = f'Update on : {current_time}\nCoin :Doge - USDT \nBinance Price: {binance_price}\nWazirX Price: {wazirx_price}\nPrice Difference : {price_difference}'
         else:
             message = 'Error fetching prices.'
 
         bot.send_message(chat_id='-4080038826', text=message)  # Replace with your chat username
-        time.sleep(500)  # Wait for 10 seconds before sending the next update
+        time.sleep(1500)  # Wait for 10 seconds before sending the next update
 
 # Initialize the Telegram bot
 bot = Bot(token=telegram_bot_token)
